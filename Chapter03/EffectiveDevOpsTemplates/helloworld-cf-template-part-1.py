@@ -15,7 +15,7 @@ ApplicationPort = "3000"
 
 t = Template()
 
-t.add_description("Effective DevOps in AWS: HelloWorld web application")
+# t.add_description("Effective DevOps in AWS: HelloWorld web application")
 
 t.add_parameter(Parameter(
     "KeyPair",
@@ -45,10 +45,11 @@ t.add_resource(ec2.SecurityGroup(
 
 ud = Base64(Join('\n', [
     "#!/bin/bash",
+    "sudo amazon-linux-extras install epel",
     "sudo yum install --enablerepo=epel -y nodejs",
-    "wget http://bit.ly/2vESNuc -O /home/ec2-user/helloworld.js",
-    "wget http://bit.ly/2vVvT18 -O /etc/init/helloworld.conf",
-    "start helloworld"
+    "wget https://raw.githubusercontent.com/scent2d/Effective-DevOps-with-AWS-Second-Edition/master/Chapter02/helloworld.js -O /home/ec2-user/helloworld.js",
+    "wget https://raw.githubusercontent.com/scent2d/Effective-DevOps-with-AWS-Second-Edition/master/Chapter02/helloworld.conf -O /etc/init/helloworld.conf",
+    "sudo start helloworld"
 ]))
 
 t.add_resource(ec2.Instance(
@@ -75,4 +76,4 @@ t.add_output(Output(
     ]),
 ))
 
-print t.to_json()
+print(t.to_json())

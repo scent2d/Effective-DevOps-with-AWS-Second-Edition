@@ -1,5 +1,3 @@
-"""Generating CloudFormation template."""
-
 from troposphere import (
     Base64,
     ec2,
@@ -48,8 +46,9 @@ ud = Base64(Join('\n', [
     "sudo amazon-linux-extras install epel",
     "sudo yum install --enablerepo=epel -y nodejs",
     "wget https://raw.githubusercontent.com/scent2d/Effective-DevOps-with-AWS-Second-Edition/master/Chapter02/helloworld.js -O /home/ec2-user/helloworld.js",
-    "wget https://raw.githubusercontent.com/scent2d/Effective-DevOps-with-AWS-Second-Edition/master/Chapter02/helloworld.conf -O /etc/init/helloworld.conf",
-    "sudo start helloworld"
+    "wget https://raw.githubusercontent.com/scent2d/Effective-DevOps-with-AWS-Second-Edition/master/Chapter02/helloworld.service -O /etc/systemd/system/helloworld.service",
+    "sudo systemctl daemon-reload",
+    "sudo systemctl start helloworld"
 ]))
 
 t.add_resource(ec2.Instance(
